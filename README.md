@@ -1,7 +1,7 @@
 Epsilon-ArgoUML Integration
 ===========
 
-Eclipse plugins that extend Epsilon's Model Connectivity (EMC) layer with support for managing ArgoUML models (.zargo) using languages of the Epsilon programs to perform activities such as code generation, model validation and model-to-model transformation. The ArgoUML EMC driver supports both loading/quetying and modifying/saving .zargo models.
+Eclipse plugins that extend Epsilon's Model Connectivity (EMC) layer with support for managing ArgoUML models (.zargo) using languages of the [Epsilon platform](http://www.eclipse.org/epsilon) to perform activities such as code generation, model validation and model-to-model transformation. The ArgoUML EMC driver supports both loading/querying and modifying/saving .zargo models.
 
 Example
 -----------
