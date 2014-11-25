@@ -1,0 +1,6 @@
+for (c in Class.all) {
+	c.name.println();
+	for (a in c.feature.select(f|f.isTypeOf(Attribute))) {
+		("-" + a.name).println();
+	}
+}
