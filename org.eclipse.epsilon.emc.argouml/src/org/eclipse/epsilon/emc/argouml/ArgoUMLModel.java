@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jmi.model.ModelPackage;
 import javax.jmi.reflect.RefPackage;
 import javax.xml.transform.TransformerFactory;
 
@@ -22,6 +23,7 @@ import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.eol.EolModule;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.models.CachedModel;
+import org.eclipse.epsilon.eol.models.IRelativePathResolver;
 import org.omg.uml.foundation.core.ModelElement;
 import org.omg.uml.foundation.core.Stereotype;
 import org.omg.uml.foundation.core.UmlClass;
@@ -47,8 +49,9 @@ public class ArgoUMLModel extends AbstractMdrModel {
 	public static void main(String[] args) throws Exception {
 		
 		ArgoUMLModel model = new ArgoUMLModel();
-		model.setModelFile("/Users/dimitrioskolovos/Desktop/dummy1.zargo");
+		model.setModelFile("/Users/dkolovos/Projects/Eclipse/eclipse-modeling-luna/runtime-workspace/org.eclipse.epsilon.emc.argouml.examples.kitchensink/cookbook.zargo");
 		model.setName("M");
+		model.setReadOnLoad(true);
 		model.load();
 		
 		EolModule module = new EolModule();
@@ -138,15 +141,13 @@ public class ArgoUMLModel extends AbstractMdrModel {
 	}
 	
 	@Override
-	public void load(StringProperties properties, String basePath)
+	public void load(StringProperties properties, IRelativePathResolver resolver)
 			throws EolModelLoadingException {
-		super.load(properties, basePath);
+		super.load(properties, resolver);
 		
 		modelFile = properties.getProperty(PROPERTY_MODEL_FILE, "");
 		
-		if (basePath != null) {
-			modelFile = basePath + modelFile;
-		}
+		if (resolver != null) modelFile = resolver.resolve(modelFile);
 		
 		cacheElements = properties.getBooleanProperty(CachedModel.PROPERTY_CACHED, true);
 		overrideProfileDirectories = properties.getBooleanProperty(PROPERTY_IGNORE_ARGOUML_PROFILE_DIRECTORIES, false);
@@ -158,9 +159,9 @@ public class ArgoUMLModel extends AbstractMdrModel {
 		}
 		
 		String profileWorkspaceDirectoriesString = properties.getProperty(PROPERTY_PROFILE_WORKSPACE_DIRECTORIES, "");
-		if (basePath != null && profileWorkspaceDirectoriesString.trim().length() > 0) {
+		if (resolver != null && profileWorkspaceDirectoriesString.trim().length() > 0) {
 			for (String profileDirectory : profileWorkspaceDirectoriesString.split(";")) {
-				profileDirectories.add(basePath + profileDirectory.trim());
+				profileDirectories.add(resolver.resolve(profileDirectory.trim()));
 			}
 		}
 		
