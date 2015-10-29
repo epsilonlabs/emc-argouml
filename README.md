@@ -19,6 +19,8 @@ Update site
 -----------
 https://raw.githubusercontent.com/epsilonlabs/emc-argouml/master/org.eclipse.epsilon.argouml.updatesite/
 
+*Important:* You will need to update to the latest interim version of Epsilon to use the ArgoUML driver.
+
 Tips
 -----------
 To explore the exact version of the UML metamodel that ArgoUML models conform to, open Epsilon's EPackage Registry view, click the refresh button and look for the uml14 metamodel.
