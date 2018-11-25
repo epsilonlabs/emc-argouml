@@ -17,9 +17,7 @@ for (c in Class.all) {
 
 Update site
 -----------
-https://raw.githubusercontent.com/epsilonlabs/emc-argouml/master/org.eclipse.epsilon.argouml.updatesite/
-
-**Important:** You will need to update to the latest interim version of Epsilon to use the ArgoUML driver.
+https://raw.githubusercontent.com/epsilonlabs/emc-argouml/master/org.eclipse.epsilon.argouml.updatesite/ (Untick "Group items by category")
 
 Tips
 -----------
