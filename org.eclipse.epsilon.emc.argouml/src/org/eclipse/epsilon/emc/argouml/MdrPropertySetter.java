@@ -18,13 +18,14 @@ import javax.jmi.reflect.RefObject;
 import org.eclipse.epsilon.eol.exceptions.EolIllegalPropertyAssignmentException;
 import org.eclipse.epsilon.eol.exceptions.EolIllegalPropertyException;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.AbstractPropertySetter;
 import org.eclipse.epsilon.eol.execute.introspection.IReflectivePropertySetter;
 
 public class MdrPropertySetter extends AbstractPropertySetter implements IReflectivePropertySetter {
 
-	public void invoke(Object value) throws EolRuntimeException {
-		RefObject refObject = (RefObject) object;
+	public void invoke(Object target, String property, Object value, IEolContext context) throws EolRuntimeException {
+		RefObject refObject = (RefObject) target;
 		
 		StructuralFeature feature = MdrUtil.getStructuralFeature(refObject,property);
 		
@@ -40,8 +41,7 @@ public class MdrPropertySetter extends AbstractPropertySetter implements IReflec
 					MdrUtil.setCollectionValues((Collection)value,sourceValues);
 				}
 				else {
-					throw new EolIllegalPropertyAssignmentException(
-							this.getProperty(), this.getAst());
+					throw new EolIllegalPropertyAssignmentException(property, context);
 				}
 			}
 			else { 
@@ -49,15 +49,19 @@ public class MdrPropertySetter extends AbstractPropertySetter implements IReflec
 			}
 		}
 		else {
-			throw new EolIllegalPropertyException(object, property, ast, context);
+			throw new EolIllegalPropertyException(target, property, context);
 		}
 	}
 
-	public Object coerce(Object value) throws EolIllegalPropertyException {
+	@Override
+	public Object coerce(Object target, String property, Object value, IEolContext context)
+			throws EolIllegalPropertyException {
 		return value;
 	}
-
-	public boolean conforms(Object value) throws EolIllegalPropertyException {
+	
+	@Override
+	public boolean conforms(Object target, String property, Object value, IEolContext context)
+			throws EolIllegalPropertyException {
 		return true;
 	}
 }

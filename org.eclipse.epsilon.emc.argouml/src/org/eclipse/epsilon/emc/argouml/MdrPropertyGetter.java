@@ -17,11 +17,12 @@ import javax.jmi.reflect.RefObject;
 
 import org.eclipse.epsilon.eol.exceptions.EolIllegalPropertyException;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
+import org.eclipse.epsilon.eol.execute.context.IEolContext;
 import org.eclipse.epsilon.eol.execute.introspection.AbstractPropertyGetter;
 
 public class MdrPropertyGetter extends AbstractPropertyGetter{
 
-	public Object invoke(Object object, String property) throws EolRuntimeException {
+	public Object invoke(Object object, String property, IEolContext context) throws EolRuntimeException {
 
 		RefObject refObject = (RefObject) object;
 		
@@ -43,7 +44,7 @@ public class MdrPropertyGetter extends AbstractPropertyGetter{
 			}
 		}
 		else {
-			throw new EolIllegalPropertyException(object, property, ast, context);
+			throw new EolIllegalPropertyException(object, property, context);
 		}
 	}
 
